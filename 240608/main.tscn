@@ -1,0 +1,138 @@
+[gd_scene load_steps=21 format=3 uid="uid://v4vfor0h51ik"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_23nia"]
+[ext_resource type="FontFile" uid="uid://bpmitxw536xt5" path="res://NotoSansJP-Bold.ttf" id="2_41i4m"]
+[ext_resource type="Texture2D" uid="uid://crelysyr1011o" path="res://tile.webp" id="2_qd7b5"]
+[ext_resource type="Script" path="res://Debugger.gd" id="3_mujyx"]
+[ext_resource type="FontFile" uid="uid://bj3iminqpfc7a" path="res://MPLUS1p-Black.ttf" id="5_l3wx8"]
+[ext_resource type="PackedScene" uid="uid://c4owlbi73bfoj" path="res://Car.glb" id="8_plenr"]
+[ext_resource type="Script" path="res://Car.gd" id="9_ghfqy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_5362a"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jchlk"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_go74w"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u064c"]
+size = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5k2s3"]
+albedo_texture = ExtResource("2_qd7b5")
+uv1_scale = Vector3(6, 6, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ln0nq"]
+transparency = 1
+albedo_color = Color(0.85098, 0.258824, 0.227451, 0.4)
+
+[sub_resource type="TextMesh" id="TextMesh_4bp8u"]
+material = SubResource("StandardMaterial3D_ln0nq")
+text = "N"
+font = ExtResource("5_l3wx8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iqmss"]
+transparency = 1
+albedo_color = Color(0.960784, 0.890196, 0.258824, 0.4)
+
+[sub_resource type="TextMesh" id="TextMesh_5rv5y"]
+material = SubResource("StandardMaterial3D_iqmss")
+text = "S"
+font = ExtResource("5_l3wx8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e3opb"]
+transparency = 1
+albedo_color = Color(0.258824, 0.529412, 0.960784, 0.4)
+
+[sub_resource type="TextMesh" id="TextMesh_wxpvf"]
+material = SubResource("StandardMaterial3D_e3opb")
+text = "E"
+font = ExtResource("5_l3wx8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j2u4y"]
+transparency = 1
+albedo_color = Color(0.482353, 0.482353, 0.482353, 0.4)
+
+[sub_resource type="TextMesh" id="TextMesh_lhbip"]
+material = SubResource("StandardMaterial3D_j2u4y")
+text = "w"
+font = ExtResource("5_l3wx8")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_23nia")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.477182, 1, 0)
+visible = false
+tracker = &"left_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_5362a")
+surface_material_override/0 = SubResource("StandardMaterial3D_jchlk")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27858, 1, 0)
+tracker = &"right_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = SubResource("BoxMesh_5362a")
+surface_material_override/0 = SubResource("StandardMaterial3D_go74w")
+
+[node name="Debugger" type="Label3D" parent="XROrigin3D/RightController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0.05, 0)
+pixel_size = 0.0005
+text = " "
+font = ExtResource("2_41i4m")
+outline_size = 8
+horizontal_alignment = 0
+vertical_alignment = 2
+line_spacing = -10.0
+script = ExtResource("3_mujyx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(20, 20)
+transform = Transform2D(1, 0, 0, 1, 20, 20)
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 177.0
+offset_bottom = 81.0
+text = "Enter VR"
+metadata/_edit_use_anchors_ = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.573576, 0.819152, 0, -0.819152, 0.573576, 0, 5, -0.560164)
+shadow_blur = 2.863
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(6, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, -3.5)
+mesh = SubResource("PlaneMesh_u064c")
+surface_material_override/0 = SubResource("StandardMaterial3D_5k2s3")
+
+[node name="N" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0.300264, -0.524921)
+mesh = SubResource("TextMesh_4bp8u")
+
+[node name="S" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0.300264, 0.525336)
+mesh = SubResource("TextMesh_5rv5y")
+
+[node name="E" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 5, 0, 1, 0, -4.37114e-08, 0.525, 0.3, 0)
+mesh = SubResource("TextMesh_wxpvf")
+
+[node name="W" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 5, 0, -1, 0, -4.37114e-08, -0.525, 0.3, 0)
+mesh = SubResource("TextMesh_lhbip")
+
+[node name="Car" parent="." instance=ExtResource("8_plenr")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.13, 0.00075707, -1.125)
+script = ExtResource("9_ghfqy")
+
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]
+[connection signal="input_vector2_changed" from="XROrigin3D/RightController" to="." method="_on_right_controller_input_vector_2_changed"]
