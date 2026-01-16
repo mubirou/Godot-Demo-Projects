@@ -1,6 +1,5 @@
 #### 使い方
 
-* 任意のフォルダを選択
 * [...]-[Copy permalink] を選択しコピー
 * [download-directory・github・io](https://download-directory.github.io/) にアクセス
 * 上記でコピーした内容をペーストし [Enter]
